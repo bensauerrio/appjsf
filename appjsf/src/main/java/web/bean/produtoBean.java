@@ -5,16 +5,15 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 
 @ManagedBean
-@RequestScoped
-
+@SessionScoped
 public class produtoBean {
-
-	private Produto produto;
+	//precisa instanciar o produto, se não ele diz que está nulo
+	private Produto produto = new Produto();
 	private static List<Produto> lista;
 	private DataModel<Produto> produtos;
 	
@@ -46,8 +45,25 @@ public class produtoBean {
 		return "home";
 	}
 	
-
-
+	public String listarProdutos() {
+		return "home";
+	}
+	
+	public String salvarProduto() {
+		//pegar os parametros que estao sendo passados para a pagina e salvar no banco
+		lista.add(produto);
+		return "home";
+	}
+	
+	public String editarProdutoForm() {
+		produto = (Produto) (produtos.getRowData());
+		return "produto_edit";
+	}
+	
+	public String salvarProdutoEdit() {
+		lista.remove(produto);
+		return"home";
+	}
 	///gets and sets
 	public void setProduto(Produto produto) {
 		this.produto = produto;
